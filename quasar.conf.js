@@ -22,7 +22,6 @@ module.exports = function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v1.quasar.dev/quasar-cli/boot-files
     boot: [
-      
       'axios',
     ],
 
@@ -69,17 +68,23 @@ module.exports = function (/* ctx */) {
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
       chainWebpack (chain) {
         chain.plugin('eslint-webpack-plugin')
-          .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }])
+          .use(ESLintPlugin, [{ extensions: [ 'js', 'vue' ] }]),
 
         chain.module.rule('pug')
           .test(/\.pug$/)
           .use('pug-plain-loader')
             .loader('pug-plain-loader')
       },
+
       extendWebpack (cfg) {
         cfg.module.rules.push({
           test: /\.pug$/,
           loader: 'pug-plain-loader'
+        }),
+
+        cfg.module.rules.push({
+          test: /\.styl$/,
+          loader: 'stylus-loader'
         })
       }
     },
